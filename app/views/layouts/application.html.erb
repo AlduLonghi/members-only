@@ -10,6 +10,39 @@
   </head>
 
   <body>
-    <%= yield %>
+   <% if flash[:notice] %>
+  		<div class="alert alert-primary mb-0">
+  			<%= notice %>
+  		</div>
+  	<% end %>
+  	<% if flash[:alert] %>
+  		<div class="alert alert-warning mb-0">
+  			<%= alert %>
+  		</div>
+  	<% end %>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <%= link_to 'Cowboy', root_path, class: "navbar-brand" %>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <%= link_to 'Home', root_path, class: "nav-link" %>
+          </li>
+        </ul>
+        <% if user_signed_in? %>
+        <%= link_to 'New Post', new_post_path, class: "btn btn-primary mr-3" %>
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+        <% else %>
+          <%= link_to 'Sign In', new_user_session_path, class: "btn btn-primary mr-3" %>
+          <%= link_to 'Sign Up', new_user_registration_path, class: "btn btn-danger" %>
+        <% end %>
+      </div>
+    </nav>
+    <div class="container p-2">
+      <%= yield %>
+    </div>
   </body>
 </html>
